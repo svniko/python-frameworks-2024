@@ -1,0 +1,23 @@
+p {
+     color: brown;
+     font-size: 1.5em;
+    }
+.mine{
+     color: rgb(52, 242, 58);
+     font-family:'Lucida Sans, sans-serif;
+    }
+    
+#name{
+     border-style: dashed;
+     border-radius: 10pt;
+     font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+     text-align: center;
+    }
+ body{
+     width:600px;
+     margin: auto;
+     font-size: 1.1em;
+    }
+.lines{
+     border-bottom: solid burlywood 1pt;
+    }

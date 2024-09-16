@@ -1,0 +1,30 @@
+{% extends "layout.jinja" %}
+{%block content%}
+    <h1>Home page</h1>
+    {# ctlr+/ #}
+    {# <p>This is a template</p>
+    <p>Hello, {{name}}</p>
+    <p>We know you are {{age}} years old {{prof|lower}} </p> #}
+
+    {% if name and age and profession %}
+        <p>Hello, {{ name }}. We  know that you are {{age}} years old {{profession}}</p>
+    {% elif name and not age and not profession%}     
+        <p>Hello, {{ name }}. We don't know your age and profession</p>  
+    {% elif name and age and not profession%}  
+        <p>Hello, {{ name }}. We know your age but not profession</p>
+    {% else %}
+         <p>Hello</p>
+    {% endif %}
+
+    {%set a = 'dog'%}
+    <p>This is a {{a}}</p>
+
+    {%set users = ['tom', 'jerry', 'spike']%}
+
+    <ul>
+    {% for user in users%}
+        <li>{{user|title}}</li>
+    {% endfor%}
+    </ul>
+
+{%endblock content%}
