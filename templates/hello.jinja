@@ -1,0 +1,14 @@
+{% extends 'layout.jinja' %}
+{% block content %}
+{%if flag == 1%}
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Well done!</h4>
+  <p>Wow, how nice we greeted {{name}}</p>
+  <hr>
+  <p class="mb-0">How clever we are</p>
+</div>
+{%endif%}
+<h1>Lecture 5</h1>
+<h2>Hello, {{ name }}</h2>
+
+{% endblock  content%}

@@ -1,0 +1,30 @@
+{% extends 'layout.jinja' %}
+{% block content %}
+{%if flag==0%}
+    <p class="alert alert-warning" role="alert">Enter your name, please</p>
+{%endif%}
+<h1>Lecture 3</h1>
+{# <form action="http://www.google.com/search">
+    <input name="q" type="text">
+    <input type="submit" value="Submit">
+</form> #}
+
+
+<form action="{{url_for('sbm')}}" method="post">
+     <input name="name" type="text"
+     autofocus autocomplete="off"
+     placeholder="Enter your name">
+     <button>Submit</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        if ({{flag}}==0){
+            document.querySelector('[name="name"]').style.backgroundColor='#ff5555';
+        } else {
+            document.querySelector('[name="name"]').style.backgroundColor='white';
+        }
+    })
+</script>
+
+{% endblock  content%}

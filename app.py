@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 # app = Flask(__name__, template_folder='')
 app = Flask(__name__)
@@ -52,6 +52,29 @@ def about():
 @app.route("/user/<name>")
 def user(name):
     return f"<h1>Hello, {name}!</h1>"
+
+@app.route('/lect3/')
+def lect3():
+    return render_template('lecture3.jinja')
+
+@app.route('/hello/', methods=['GET','POST'])
+def sbm():
+    if request.method == "GET":
+        return render_template('hello.jinja',
+                           name='stranger')
+    else:
+        name = request.form.get('name')
+        if not name:
+            return render_template('lecture3.jinja', flag=0)
+        
+        return render_template('hello.jinja',
+                            name=name,
+                            flag = 1)
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return render_template('405.jinja'), 405
+
 
 # if __name__ == '__main__':
 #     app.run(port=8000)
