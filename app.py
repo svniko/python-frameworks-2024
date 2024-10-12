@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request
+from flask import redirect, url_for, flash
+import random
 
 # app = Flask(__name__, template_folder='')
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 
 pets = [
     {
@@ -23,6 +26,73 @@ pets = [
         'color':'brown'
     },
 ]
+
+game = {}
+# game = {
+#     'choise':None,
+#     'you_win': 0,
+#     'comp_win': 0,
+#     'round': 0
+# }
+
+def init():
+    global game
+    # game = {
+    #     'choise':None,
+    #     'you_win': 0,
+    #     'comp_win': 0,
+    #     'round': 0
+    # }
+
+    game['choise'] = None
+    game['comp_win'] = 0
+    game['you_win'] = 0
+    game['round'] = 0
+    
+
+@app.route('/start/')
+def start():
+    # game['choise'] = None
+    # game['comp_win'] = 0
+    # game['you_win'] = 0
+    # game['round'] = 0
+    init()
+    return render_template('rsp.jinja',
+                           title = 'Game',
+                           start=True)
+
+@app.route('/select/<ch>')
+def select(ch):
+    game['choise'] = ch
+    return redirect(url_for('rsp'))
+
+@app.route('/game/')
+def rsp():
+    if game['round'] < 5:
+        game['round'] += 1
+        n = random.randint(0,2)
+        if game['choise'] == '0' and n == 0:
+            flash('Draw', category='warning')
+        elif game['choise'] == '0' and n == 1:
+            flash('You win', category='warning')
+            game['you_win'] += 1
+        elif game['choise'] == '0' and n == 2:
+            flash('Comp win', category='warning')
+            game['comp_win'] += 1
+        else:
+            pass
+    else:
+        if game['comp_win'] > game['you_win']:
+            flash('Total Com win', category='danger')
+        elif game['comp_win'] == game['you_win']:
+            flash('Total Draw', category='info')
+        else:
+            flash('Total Your win', category='success')
+
+
+    return render_template('rsp.jinja',
+                           title = 'Game')
+
 
 @app.route("/pets/")
 def our_pets():

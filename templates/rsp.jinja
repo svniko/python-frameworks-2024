@@ -1,0 +1,26 @@
+{%extends "layout.jinja"%}
+{%block content%}
+<h1>Rock-Scissors-Paper </h1>
+{%for category, message in get_flashed_messages(with_categories=true)%}
+   <div class="alert alert-{{category}}" role="alert">
+       {{message}}
+   </div>
+{%endfor%}
+{%if start%}
+    <a href = "{{url_for('rsp')}}" class="link-info">Let's start?</a>
+{%else%} 
+    <ul>
+    <li>
+    <a href = "{{url_for('select',ch=0)}}">
+        <img src="{{url_for('static', filename='images/rock.png')}}" width="70"></li>
+    </a>
+    <li><img src="{{url_for('static', filename='images/scissors.png')}}" width="70"></li>
+    <li><img src="{{url_for('static', filename='images/paper.png')}}" width="70"></li>
+    </ul>
+{%endif%}
+
+{%if not start%}
+    <a href = "{{url_for('start')}}" class="link-info">Restart?</a>
+{%endif%}
+
+{%endblock%}
