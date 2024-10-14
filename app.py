@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request
-from flask import redirect, url_for, flash
+from flask import redirect, session, url_for, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 import random
 
 # app = Flask(__name__, template_folder='')
 app = Flask(__name__)
-app.secret_key = 'super secret key'
+# app.secret_key = 'super secret key'
+app.config['SECRET_KEY'] = '5c02a8d8ba2312a73a6dc88cabc00589'
 
 pets = [
     {
@@ -26,6 +30,40 @@ pets = [
         'color':'brown'
     },
 ]
+
+class FirstForm(FlaskForm):
+    name = StringField("Enter your name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+@app.route('/lect5/', methods=['GET','POST'])
+def lect5():
+    name = None
+    form = FirstForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data = ''
+    return render_template('lecture5.jinja',
+                           title = 'Lecture 5',
+                           form = form,
+                           name = name)
+
+@app.route('/lect5_1/', methods = ['GET','POST'])
+def lect5_1():
+    # Post>Redirect>Get pattern
+   
+    form = FirstForm()
+    if form.validate_on_submit():
+        session['name'] = form.name.data
+        
+        if len(session['name'])<3:
+            flash('Looks like your name is too short')
+        form.name.data = ''
+        return redirect(url_for('lect5_1'))
+    return render_template('lecture5.jinja',
+                           title = 'Lecture 5',
+                           form = form,
+                           name = session.get('name'))
+
 
 game = {}
 # game = {
